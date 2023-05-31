@@ -1,6 +1,10 @@
 import { defineConfig } from 'umi';
 
 export default defineConfig({
+  qiankun: {
+    slave: {},
+  },
+  hash: true,
   nodeModulesTransform: {
     type: 'none',
   },
