@@ -2,26 +2,14 @@ import { defineConfig } from 'umi';
 
 export default defineConfig({
   qiankun: {
-    master: {
-      // 注册子应用信息
-      apps: [
-        {
-          name: 'user-app', // 唯一 id
-          entry: '//localhost:7011', // html entry
-        },
-        {
-          name: 'other-app', // 唯一 id
-          entry: '//localhost:7012', // html entry
-        },
-      ],
-    },
+    master: {},
   },
   layout: {
     // 支持任何不需要 dom 的
     // https://procomponents.ant.design/components/layout#prolayout
     name: 'admin-app',
     locale: false,
-    layout: 'side',
+    layout: 'top',
   },
   hash: true,
   nodeModulesTransform: {
