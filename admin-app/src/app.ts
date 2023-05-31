@@ -4,7 +4,17 @@ export const qiankun = fetch('/api/config')
   .then(({ apps }: any) => {
     return {
       // 注册子应用信息
-      apps,
+      apps: apps.map((item: any) => {
+        return {
+          ...item,
+          // 这里向子应用传递props
+          props: {
+            onClick: (event: any) => console.log(event),
+            name: 'xx',
+            age: 1,
+          },
+        };
+      }),
       routes: [
         {
           path: '/user',
@@ -26,3 +36,4 @@ export const qiankun = fetch('/api/config')
       // 支持更多的其他配置，详细看这里 https://qiankun.umijs.org/zh/api/#start-opts
     };
   });
+

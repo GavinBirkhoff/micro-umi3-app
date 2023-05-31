@@ -4,6 +4,10 @@ export default defineConfig({
   qiankun: {
     slave: {},
   },
+  dva: {
+    immer: true,
+    hmr: false,
+  },
   hash: true,
   nodeModulesTransform: {
     type: 'none',
