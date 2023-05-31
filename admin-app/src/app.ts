@@ -5,6 +5,18 @@ export const qiankun = fetch('/api/config')
     return {
       // 注册子应用信息
       apps,
+      routes: [
+        {
+          path: '/user',
+          microApp: 'user-app',
+          name: 'User',
+        },
+        {
+          path: '/other',
+          microApp: 'other-app',
+          name: 'Other',
+        },
+      ],
       // 完整生命周期钩子请看 https://qiankun.umijs.org/zh/api/#registermicroapps-apps-lifecycles
       lifeCycles: {
         afterMount: (props: any) => {

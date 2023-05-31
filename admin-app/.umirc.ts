@@ -16,16 +16,6 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    {
-      path: '/user',
-      microApp: 'user-app',
-      name: 'User',
-    },
-    {
-      path: '/other',
-      microApp: 'other-app',
-      name: 'Other',
-    },
     { path: '/', name: '主应用首页', component: '@/pages/index' },
   ],
   fastRefresh: {},
