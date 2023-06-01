@@ -27,11 +27,17 @@ export const qiankun = fetch('/api/config')
         {
           path: '/user',
           microApp: 'user-app',
+          microAppProps: {
+            autoSetLoading: true,
+          },
           name: 'User',
         },
         {
           path: '/other',
           microApp: 'other-app',
+          microAppProps: {
+            autoSetLoading: true,
+          },
           name: 'Other',
         },
       ],
