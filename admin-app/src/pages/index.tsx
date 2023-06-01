@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import styles from './index.less';
+import PageContainer from '@/components/PageContainer';
 
 export default function IndexPage() {
+  useEffect(() => {
+    localStorage.setItem('admin-app', '1');
+    console.log(localStorage);
+  }, []);
   return (
-    <div>
-      <h1 className={styles.title}>Admin Page index2</h1>
-    </div>
+    <PageContainer>
+      <h1 className={styles.title}>Admin Page index3027</h1>
+    </PageContainer>
   );
 }
