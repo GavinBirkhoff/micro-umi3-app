@@ -13,7 +13,15 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { path: '/', component: '@/pages/index' },
+    {
+      path: '/',
+      component: '@/layouts/index',
+      routes: [
+        { path: './user', component: '@/pages/user' },
+        { path: './dept', component: '@/pages/dept' },
+        { path: './', component: '@/pages/index' },
+      ],
+    },
   ],
   fastRefresh: {},
 });
