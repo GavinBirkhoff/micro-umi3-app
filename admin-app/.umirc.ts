@@ -20,6 +20,17 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
+    // 使用 MicroApp 消费微应用
+    {
+      path: '/user-app',
+      component: '@/pages/user',
+      name: 'User',
+    },
+    {
+      path: '/other-app',
+      component: '@/pages/other',
+      name: 'Other',
+    },
     { path: '/', name: '主应用首页', component: '@/pages/index' },
   ],
   fastRefresh: {},

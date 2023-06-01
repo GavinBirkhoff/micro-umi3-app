@@ -13,6 +13,8 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
+    { path: '/user', component: '@/pages/user' },
+    { path: '/user-app/user', component: '@/pages/user' },
     {
       path: '/',
       component: '@/layouts/index',
@@ -22,6 +24,7 @@ export default defineConfig({
         { path: './', component: '@/pages/index' },
       ],
     },
+    {component:'@/pages/index'}
   ],
   fastRefresh: {},
 });

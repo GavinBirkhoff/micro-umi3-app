@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import styles from './index.less';
 import PageContainer from '@/components/PageContainer';
+import { MicroApp } from 'umi';
 
-export default function IndexPage() {
-  useEffect(() => {
-  }, []);
+export default function OtherPage() {
   return (
     <PageContainer>
-      <h1 className={styles.title}>Admin Page index30826</h1>
+      <MicroApp name="other-app" autoSetLoading />
     </PageContainer>
   );
 }

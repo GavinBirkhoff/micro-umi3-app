@@ -23,18 +23,20 @@ export const qiankun = fetch('/api/config')
           },
         };
       }),
-      routes: [
-        {
-          path: '/user',
-          microApp: 'user-app',
-          name: 'User',
-        },
-        {
-          path: '/other',
-          microApp: 'other-app',
-          name: 'Other',
-        },
-      ],
+      // 下面用的 路由绑定式 消费微应用
+      // routes: [
+      //   {
+      //     path: '/user',
+      //     microApp: 'user-app',
+      //     name: 'User',
+      //   },
+      //   {
+      //     path: '/other',
+      //     microApp: 'other-app',
+      //     name: 'Other',
+      //   },
+      // ],
+      prefetch:false,
       // 完整生命周期钩子请看 https://qiankun.umijs.org/zh/api/#registermicroapps-apps-lifecycles
       lifeCycles: {
         afterMount: (props: any) => {
