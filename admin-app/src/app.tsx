@@ -1,3 +1,11 @@
+import { useState } from 'react';
+import {
+  BasicLayoutProps,
+  Settings as LayoutSettings,
+} from '@ant-design/pro-layout';
+import RightContent from '@/components/RightContent';
+// import Footer from '@/components/Footer';
+
 // 从接口中获取子应用配置，export 出的 qiankun 变量是一个 promise
 export const qiankun = fetch('/api/config')
   .then((res) => res.json())
@@ -30,10 +38,34 @@ export const qiankun = fetch('/api/config')
       // 完整生命周期钩子请看 https://qiankun.umijs.org/zh/api/#registermicroapps-apps-lifecycles
       lifeCycles: {
         afterMount: (props: any) => {
-          console.log(props);
+          console.log(props, 'afterMount');
         },
       },
       // 支持更多的其他配置，详细看这里 https://qiankun.umijs.org/zh/api/#start-opts
     };
   });
 
+export async function getInitialState() {
+  // const data = await fetchXXX();
+  return { settings: {} };
+}
+
+export const layout = ({
+  initialState,
+}: {
+  initialState: { settings?: LayoutSettings };
+}): BasicLayoutProps => {
+  return {
+    rightContentRender: () => <RightContent />,
+    // footerRender: () => <Footer />, 这不是重点
+    onPageChange: () => {},
+  };
+};
+export function useQiankunStateForSlave() {
+  const [masterState, setMasterState] = useState({});
+
+  return {
+    masterState,
+    setMasterState,
+  };
+}

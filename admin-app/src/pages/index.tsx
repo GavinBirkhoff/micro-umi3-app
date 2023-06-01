@@ -4,8 +4,6 @@ import PageContainer from '@/components/PageContainer';
 
 export default function IndexPage() {
   useEffect(() => {
-    localStorage.setItem('admin-app', '1');
-    console.log(localStorage);
   }, []);
   return (
     <PageContainer>
