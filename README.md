@@ -1,6 +1,25 @@
 # micro-umi3-app
 基于umi3 qiankun antd4的微前端应用，提供基本的登录鉴权能力，我们可以很容易在这套模版的基础之上，快速开始业务能功能。
 
+# 快速开始
+
+```shell
+# 主应用
+cd admin-app
+yarn
+yarn start
+
+# 子应用
+cd user-app
+yarn
+yarn start
+
+# 子应用
+cd other-app
+yarn
+yarn start
+```
+
 # 主要实现功能
 
 下面是一套微前端的基本架构能力，只提供基本必要功能，过多的功能会让不同的业务场景，在使用上发生困惑和更多的代码调整。
