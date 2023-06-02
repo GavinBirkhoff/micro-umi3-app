@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import {
-  BasicLayoutProps,
-  Settings as LayoutSettings,
-} from '@ant-design/pro-layout';
+import { SettingDrawer, PageLoading } from '@ant-design/pro-layout';
+import type { RunTimeLayoutConfig } from 'umi';
+import { history, RequestConfig } from 'umi';
+import store from 'local-store-pro';
 import RightContent from '@/components/RightContent';
 // import Footer from '@/components/Footer';
+import defaultSettings from '../config/defaultSettings';
+import { currentUser as queryCurrentUser } from './services/api';
+import { requestInterceptors } from './utils/request';
+
+const isDev = process.env.NODE_ENV === 'development';
+const loginPath = '/login';
 
 // 从接口中获取子应用配置，export 出的 qiankun 变量是一个 promise
 export const qiankun = fetch('/api/config')
   .then((res) => res.json())
-  .then(({ apps }: any) => {
+  .then(({ apps, routes }: any) => {
     return {
       // 注册子应用信息
       apps: apps.map((item: any) => {
@@ -23,24 +29,7 @@ export const qiankun = fetch('/api/config')
           },
         };
       }),
-      routes: [
-        {
-          path: '/user',
-          microApp: 'user-app',
-          microAppProps: {
-            autoSetLoading: true,
-          },
-          name: 'User',
-        },
-        {
-          path: '/other',
-          microApp: 'other-app',
-          microAppProps: {
-            autoSetLoading: true,
-          },
-          name: 'Other',
-        },
-      ],
+      routes,
       // 完整生命周期钩子请看 https://qiankun.umijs.org/zh/api/#registermicroapps-apps-lifecycles
       lifeCycles: {
         afterMount: (props: any) => {
@@ -51,20 +40,76 @@ export const qiankun = fetch('/api/config')
     };
   });
 
-export async function getInitialState() {
-  // const data = await fetchXXX();
-  return { settings: {} };
+/** 获取用户信息比较慢的时候会展示一个 loading */
+export const initialStateConfig = {
+  loading: <PageLoading />,
+};
+
+/**
+ * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
+ * */
+export async function getInitialState(): Promise<{
+  settings?: Partial<any>;
+  currentUser?: API.CurrentUser;
+  loading?: boolean;
+  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+}> {
+  const fetchUserInfo = async () => {
+    try {
+      if (!store('token')) {
+        throw Error('has no token');
+      }
+      const msg = await queryCurrentUser();
+      return msg.data;
+    } catch (error) {
+      history.push(loginPath);
+    }
+    return undefined;
+  };
+  // 如果不是登录页面，执行
+  if (history.location.pathname !== loginPath) {
+    const currentUser = await fetchUserInfo();
+    return {
+      fetchUserInfo,
+      currentUser,
+      settings: defaultSettings,
+    };
+  }
+  return {
+    fetchUserInfo,
+    settings: defaultSettings,
+  };
 }
 
-export const layout = ({
+export const layout: RunTimeLayoutConfig = ({
   initialState,
-}: {
-  initialState: { settings?: LayoutSettings };
-}): BasicLayoutProps => {
+  setInitialState,
+}) => {
   return {
     rightContentRender: () => <RightContent />,
     // footerRender: () => <Footer />, 这不是重点
     onPageChange: () => {},
+    childrenRender: (children, props) => {
+      return (
+        <>
+          {children}
+          {!props.location?.pathname?.includes('/login') && (
+            <SettingDrawer
+              disableUrlParams
+              enableDarkTheme
+              settings={initialState?.settings}
+              onSettingChange={(settings) => {
+                setInitialState((preInitialState) => ({
+                  ...preInitialState,
+                  settings,
+                }));
+              }}
+            />
+          )}
+        </>
+      );
+    },
+    ...initialState?.settings,
   };
 };
 export function useQiankunStateForSlave() {
@@ -75,3 +120,11 @@ export function useQiankunStateForSlave() {
     setMasterState,
   };
 }
+
+export const request: RequestConfig = {
+  timeout: 60*1000,
+  errorConfig: {},
+  middlewares: [],
+  requestInterceptors: [requestInterceptors],
+  responseInterceptors: [],
+};
