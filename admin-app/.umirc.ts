@@ -1,4 +1,6 @@
 import { defineConfig } from 'umi';
+import routes from './config/routes';
+import defaultSettings from './config/defaultSettings';
 
 export default defineConfig({
   qiankun: {
@@ -11,16 +13,13 @@ export default defineConfig({
   layout: {
     // 支持任何不需要 dom 的
     // https://procomponents.ant.design/components/layout#prolayout
-    name: 'admin-app',
     locale: false,
-    layout: 'top',
+    ...defaultSettings,
   },
   hash: true,
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [
-    { path: '/', name: '主应用首页', component: '@/pages/index' },
-  ],
+  routes,
   fastRefresh: {},
 });

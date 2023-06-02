@@ -11,5 +11,24 @@ export default {
         entry: '//localhost:7012', // html entry
       },
     ],
+    // 注册子应用路由
+    routes: [
+      {
+        path: '/user',
+        microApp: 'user-app',
+        microAppProps: {
+          autoSetLoading: true,
+        },
+        name: 'User',
+      },
+      {
+        path: '/other',
+        microApp: 'other-app',
+        microAppProps: {
+          autoSetLoading: true,
+        },
+        name: 'Other',
+      },
+    ],
   },
 };
