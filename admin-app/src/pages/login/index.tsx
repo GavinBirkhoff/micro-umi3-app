@@ -1,17 +1,37 @@
 import { FC, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import store from 'local-store-pro';
-import { useHistory } from 'umi';
-import { currentUser, login } from '@/services/api';
+import { useHistory, useModel, history } from 'umi';
+import { login } from '@/services/api';
 import styles from './index.less';
 const LoginPage: FC = () => {
-  const history = useHistory();
-  const onFinish = async (values: any) => {
+  const { initialState, setInitialState } = useModel('@@initialState');
+
+  const fetchUserInfo = async () => {
+    const userInfo = await initialState?.fetchUserInfo?.();
+    if (userInfo) {
+      await setInitialState((s) => ({
+        ...s,
+        currentUser: userInfo,
+      }));
+    }
+  };
+
+  const handleSubmit = async (values: API.LoginParams) => {
     const res = await login(values);
     // 只是简单的设置
     store('token', res.token, (res.expireIn ?? 1000) / 1000);
-    await currentUser();
-    history.push('/');
+    await fetchUserInfo();
+    /** 此方法会跳转到 redirect 参数所在的位置 */
+    if (!history) return;
+    const { query } = history.location;
+    const { redirect } = query as { redirect: string };
+    history.push(redirect || '/');
+    return;
+  };
+
+  const onFinish = async (values: any) => {
+    await handleSubmit(values as API.LoginParams);
   };
 
   const onFinishFailed = (errorInfo: any) => {
