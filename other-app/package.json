@@ -19,6 +19,7 @@
       "prettier --parser=typescript --write"
     ]
   },
+  "license": "MIT",
   "dependencies": {
     "@umijs/preset-react": "1.x",
     "antd": "^4.24.9",
