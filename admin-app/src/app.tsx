@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SettingDrawer, PageLoading } from '@ant-design/pro-layout';
-import { RunTimeLayoutConfig, useModel } from 'umi';
+import { RunTimeLayoutConfig, useModel, useSelector } from 'umi';
 import { history, RequestConfig } from 'umi';
 import store from 'local-store-pro';
 import RightContent from '@/components/RightContent';
@@ -118,10 +118,10 @@ export const useQiankunStateForSlave = (): any => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
   return {
-    masterInitialState: initialState,
-    setMasterInitialState: setInitialState,
     masterState,
     setMasterState,
+    masterInitialState: initialState,
+    setMasterInitialState: setInitialState,
   };
 };
 
