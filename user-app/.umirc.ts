@@ -13,6 +13,7 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
+    { path: '/login', exact:true, layout:false, component: '@/pages/login' },
     {
       path: '/',
       component: '@/layouts/index',
