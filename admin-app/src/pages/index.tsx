@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './index.less';
 import PageContainer from '@/components/PageContainer';
 
-export default function IndexPage() {
+const IndexPage:FC = (props)=>{
+  console.log(props,'props IndexPage');
   useEffect(() => {
   }, []);
   return (
@@ -11,3 +12,5 @@ export default function IndexPage() {
     </PageContainer>
   );
 }
+
+export default IndexPage
