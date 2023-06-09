@@ -10,6 +10,7 @@ import { currentUser as queryCurrentUser } from './services/api';
 import { requestInterceptors } from './utils/request';
 
 const isDev = process.env.NODE_ENV === 'development';
+const isDebug = isDev || history.location.query?.debug === 'true'
 const loginPath = '/login';
 
 // 从接口中获取子应用配置，export 出的 qiankun 变量是一个 promise
@@ -21,11 +22,11 @@ export const qiankun = fetch('/api/config')
       apps: apps.map((item: any) => {
         return {
           ...item,
+          entry: isDebug ? `//localhost:${item.devPort}`: item.entry,
           // 这里向子应用传递props
           props: {
-            onClick: (event: any) => console.log(event),
-            name: 'xx',
-            age: 1,
+            handleClickFromMaster: (event: any) => console.log(event),
+            msg: `我是来自主应用的值 ${item.name}`,
           },
         };
       }),
@@ -54,6 +55,7 @@ export async function getInitialState(): Promise<{
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
+  console.log('getInitialState admin-app');
   const fetchUserInfo = async () => {
     try {
       if (!store('token')) {
@@ -116,7 +118,7 @@ export const layout: RunTimeLayoutConfig = ({
 export const useQiankunStateForSlave = (): any => {
   const [masterState, setMasterState] = useState({});
   const { initialState, setInitialState } = useModel('@@initialState');
-
+  console.log(initialState,'useQiankunStateForSlave')
   return {
     masterState,
     setMasterState,

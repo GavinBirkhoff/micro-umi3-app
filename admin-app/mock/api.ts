@@ -4,11 +4,13 @@ export default {
     apps: [
       {
         name: 'user-app', // 唯一 id
-        entry: '//localhost:7011', // html entry
+        entry: '/user-app/', // html entry
+        devPort: 7011
       },
       {
         name: 'other-app', // 唯一 id
-        entry: '//localhost:7012', // html entry
+        entry: '/other-app/', // html entry
+        devPort: 7012
       },
     ],
     // 注册子应用路由
@@ -20,6 +22,7 @@ export default {
           autoSetLoading: true,
         },
         name: 'User',
+        access:'guest'
       },
       {
         path: '/other',
@@ -28,6 +31,7 @@ export default {
           autoSetLoading: true,
         },
         name: 'Other',
+        access:'guest'
       },
     ],
   },

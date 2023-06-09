@@ -5,13 +5,16 @@ import store from 'local-store-pro';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
 
+let masterInitialState:any = null
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(): Promise<{
+  masterInitialState?:any
   info?:any
   fetchInfo?: () => Promise<any | undefined>;
 }> {
+  console.log("getInitialState user-app");
   const fetchInfo = async () => {
     try {
       if (!store('token')) {
@@ -27,6 +30,7 @@ export async function getInitialState(): Promise<{
   if (history.location.pathname !== loginPath) {
     const info = await fetchInfo();
     return {
+      masterInitialState,
       info,
       fetchInfo,
     };
@@ -43,6 +47,7 @@ export const qiankun = {
   // 应用 render 之前触发
   async mount(props: any) {
     console.log(props, 'user-app mount');
+    masterInitialState = props.masterInitialState
   },
   // 应用卸载之后触发
   async unmount(props: any) {

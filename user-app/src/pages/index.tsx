@@ -7,6 +7,7 @@ export default function IndexPage() {
   const masterProps = useModel('@@qiankunStateFromMaster');
   console.log(masterProps, 'masterProps');
   useEffect(() => {
+    masterProps.handleClickFromMaster(`我是来自子应用user-app，'@@qiankunStateFromMaster' handleClickFromMaster`)
   }, []);
   return (
     <div>
