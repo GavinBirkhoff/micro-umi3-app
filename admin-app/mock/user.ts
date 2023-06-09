@@ -10,7 +10,6 @@ const waitTime = (time: number = 100) => {
 
 export default {
   'GET /api/currentUser': (req: Request, res: Response) => {
-    console.log(req.headers);
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       res.status(401).send({
@@ -42,7 +41,7 @@ export default {
         type,
         currentAuthority: 'admin',
         token:'Bearer xxxx-xxxx-xxxx-xxxx',
-        expireIn:60*1000
+        expireIn:600*1000
 
       });
       return;
