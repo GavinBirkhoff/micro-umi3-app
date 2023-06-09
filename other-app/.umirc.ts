@@ -4,6 +4,9 @@ export default defineConfig({
   qiankun: {
     slave: {},
   },
+  access: {
+    strictMode: true,
+  },
   dva: {
     immer: true,
     hmr: false,

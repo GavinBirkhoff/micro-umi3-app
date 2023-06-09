@@ -6,6 +6,9 @@ export default defineConfig({
   qiankun: {
     master: {},
   },
+  access: {
+    strictMode: true,
+  },
   dva: {
     immer: true,
     hmr: false,
