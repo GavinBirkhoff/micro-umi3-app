@@ -24,6 +24,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "local-store-pro": "^3.0.0",
     "querystring": "^0.2.1",
+    "ts-copilot": "^1.0.0-Beta",
     "umi": "^3.5.41"
   },
   "devDependencies": {
