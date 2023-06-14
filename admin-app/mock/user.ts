@@ -1,12 +1,5 @@
 import { Request, Response } from 'express';
-
-const waitTime = (time: number = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+import { sleep } from 'ts-copilot';
 
 export default {
   'GET /api/currentUser': (req: Request, res: Response) => {
@@ -27,22 +20,21 @@ export default {
       data: {
         name: 'Gavin',
         userid: '00000001',
-        email: 'gavinbirkhoff@gmail.com'
+        email: 'gavinbirkhoff@gmail.com',
       },
     });
   },
 
   'POST /api/login': async (req: Request, res: Response) => {
     const { password, username, type } = req.body;
-    await waitTime(2000);
+    await sleep(2000);
     if (password === '123456' && username === 'admin') {
       res.send({
         status: 'ok',
         type,
         currentAuthority: 'admin',
-        token:'Bearer xxxx-xxxx-xxxx-xxxx',
-        expireIn:600*1000
-
+        token: 'Bearer xxxx-xxxx-xxxx-xxxx',
+        expireIn: 600 * 1000,
       });
       return;
     }
