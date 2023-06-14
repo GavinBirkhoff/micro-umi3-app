@@ -19,6 +19,10 @@ export default defineConfig({
     locale: false,
     ...defaultSettings,
   },
+  theme: {
+    '@primary-color': '#1DA57A',
+    'root-entry-name': 'variable',
+  },
   hash: true,
   nodeModulesTransform: {
     type: 'none',
