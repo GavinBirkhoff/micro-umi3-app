@@ -37,6 +37,7 @@ export const qiankun = fetch('/api/config')
           console.log(props, 'afterMount');
         },
       },
+      prefetch:false
       // 支持更多的其他配置，详细看这里 https://qiankun.umijs.org/zh/api/#start-opts
     };
   });
